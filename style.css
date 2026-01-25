@@ -1,0 +1,104 @@
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --danger: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --border: #334155;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at top, #1e1b4b, var(--bg));
+    color: var(--text);
+    margin: 0; padding: 15px; min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container { max-width: 800px; margin: 0 auto; transition: transform 0.1s; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+.setup-content, .game-controls, .game-info {
+    background: var(--card); border-radius: 16px; padding: 20px;
+    margin-bottom: 20px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+.shake { animation: shake 0.2s cubic-bezier(.36,.07,.19,.97) both; }
+
+@keyframes entry-pulse {
+    0% { background-color: rgba(16, 185, 129, 0.6); }
+    100% { background-color: transparent; }
+}
+.last-entry-pulse { animation: entry-pulse 2s ease-out; }
+
+@keyframes elimination-flash {
+    0% { background-color: var(--danger); }
+    100% { background-color: transparent; }
+}
+.elimination-flash { animation: elimination-flash 1s ease-out; }
+
+@keyframes header-glow {
+    0% { box-shadow: inset 0 0 10px rgba(99, 102, 241, 0.2); border-bottom: 2px solid var(--primary); }
+    50% { box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.5); border-bottom: 2px solid #fff; }
+    100% { box-shadow: inset 0 0 10px rgba(99, 102, 241, 0.2); border-bottom: 2px solid var(--primary); }
+}
+.current-player-header { animation: header-glow 2s infinite ease-in-out; color: #fff !important; }
+
+/* Scoreboard Scroll & Sticky */
+.scoreboard {
+    overflow: auto; max-height: 45vh; border-radius: 12px;
+    margin-bottom: 20px; border: 1px solid var(--border);
+}
+.score-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.score-table th { 
+    position: sticky; top: 0; background: #2d3748; padding: 15px 10px; 
+    z-index: 20; border-bottom: 2px solid var(--border); vertical-align: top;
+}
+.row-label { position: sticky; left: 0; background: var(--bg); font-weight: bold; z-index: 15; }
+.score-table td { padding: 12px 10px; text-align: center; border-bottom: 1px solid var(--border); }
+
+/* Sticky Totals */
+.total-row td {
+    position: sticky; bottom: 0; background: var(--card) !important;
+    z-index: 20; border-top: 2px solid var(--border);
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+.total-row td:first-child { z-index: 21; background: var(--bg) !important; }
+
+/* Highlights */
+.current-player-column { background: rgba(99, 102, 241, 0.1); }
+.leader-column { background: rgba(245, 158, 11, 0.05) !important; }
+.leader-column .player-header-name::after { content: " 👑"; }
+.eliminated { opacity: 0.3 !important; background: rgba(239, 68, 68, 0.1) !important; filter: grayscale(1); }
+.eliminated .player-header-name { text-decoration: line-through; }
+.chase-message { display: block; font-size: 0.7rem; color: var(--warning); margin-top: 5px; font-weight: bold; }
+
+/* Stats Modal */
+.stats-container { margin-top: 25px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; text-align: left; }
+.stat-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+/* Buttons & Inputs */
+.quick-scores { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.btn-quick { flex: 1; padding: 12px; background: var(--border); border: none; border-radius: 8px; color: white; cursor: pointer; font-weight: bold; }
+.btn { padding: 14px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+.btn-primary { background: var(--primary); color: white; width: 100%; }
+.btn-danger { background: var(--danger); color: white; flex: 2; }
+.btn-secondary { background: var(--border); color: white; flex: 1; }
+input { flex: 1; padding: 12px; background: var(--bg); color: white; border: 2px solid var(--border); border-radius: 8px; font-size: 1.2rem; }
+.input-group { display: flex; gap: 10px; margin-bottom: 10px; }
+
+.modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 100; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); }
+.modal-content { position: relative; background: var(--card); padding: 40px; border-radius: 24px; text-align: center; max-width: 400px; width: 90%; }
+.hidden { display: none; }

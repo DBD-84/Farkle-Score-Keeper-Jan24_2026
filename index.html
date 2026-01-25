@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farkle Score Keeper Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="setup-screen" class="screen active">
+            <h1>🎲 Farkle Keeper</h1>
+            <div class="setup-content">
+                <h2>Enter Player Names</h2>
+                <div id="player-inputs"></div>
+                <button id="add-player-btn" class="btn btn-secondary">+ Add Player</button>
+                <button id="start-game-btn" class="btn btn-primary" disabled>Start Game</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <header>
+                <div class="game-info">
+                    <div class="current-turn">
+                        <span class="label">Current Turn:</span>
+                        <span id="current-player-name" class="player-name"></span>
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <div id="scoreboard" class="scoreboard"></div>
+
+                <div class="game-controls">
+                    <div class="score-input-section">
+                        <div class="quick-scores">
+                            <button type="button" class="btn-quick" data-value="50">+50</button>
+                            <button type="button" class="btn-quick" data-value="100">+100</button>
+                            <button type="button" class="btn-quick" data-value="500">+500</button>
+                            <button type="button" class="btn-quick" data-value="1000">+1k</button>
+                            <button type="button" class="btn-quick" id="clear-input">Clear</button>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="number" id="turn-score-input" placeholder="0" inputmode="numeric">
+                            <button id="submit-score-btn" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="farkle-btn" class="btn btn-danger">Farkle</button>
+                        <button id="undo-btn" class="btn btn-secondary" disabled>Undo</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="win-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="modal-title">🎉 Game Over!</h2>
+            <div id="winner-text"></div>
+            <button id="new-game-btn" class="btn btn-primary" style="margin-top:20px;">New Game</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
