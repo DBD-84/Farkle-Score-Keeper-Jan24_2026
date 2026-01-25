@@ -156,4 +156,29 @@ const save = () => gameHistory.push(JSON.stringify({ players, currentPlayerIndex
 const undo = () => { if (!gameHistory.length) return; const s = JSON.parse(gameHistory.pop()); players = s.players; currentPlayerIndex = s.currentPlayerIndex; finalRound = s.finalRound; highestScore = s.highestScore; lastEntryCoords = s.lastEntryCoords; stats = s.stats; updateUI(); };
 const updateUI = () => { document.getElementById('current-player-name').innerText = players[currentPlayerIndex].name; document.getElementById('undo-btn').disabled = !gameHistory.length; renderBoard(); turnInput.value = ''; turnInput.focus(); };
 
+// Add this to your setupListeners/init function:
+document.getElementById('rematch-btn').onclick = handleRematch;
+
+function handleRematch() {
+    // Reset all player data but keep the names
+    players.forEach(p => {
+        p.score = 0;
+        p.onBoard = false;
+        p.turnScores = [];
+        p.eliminated = false;
+    });
+
+    // Reset game state
+    currentPlayerIndex = 0;
+    finalRound = false;
+    highestScore = 0;
+    gameHistory = [];
+    lastEntryCoords = { playerIndex: -1, turnIndex: -1 };
+    stats = { highestTurn: { score: 0, playerName: '' }, farkleCounts: {} };
+
+    // Hide modal and refresh UI
+    document.getElementById('win-modal').classList.add('hidden');
+    updateUI();
+}
+
 init();
